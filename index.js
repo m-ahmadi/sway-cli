@@ -43,9 +43,7 @@ y.command("build-debug-normal", "Build and compile everything according to debug
 y.command("build-debug-light", "Build and compile everything according to debug-light environment.", {}, run);
 y.command("build-release-light", "Build and compile everything according to release-light environment.", {}, run);
 y.command("build-release-hard", "Build and compile everything according to release-hard environment.", {}, run);
-y.command("sync", "Sync local sway config with the global.", {}, () => {
-	fs.copySync(d+".sway/config.js", "./.sway/config.js");
-});
+y.command("sync", "Sync local sway config with the global.", {}, sync);
 
 var cmd = require("./commands");
 y.argv;
@@ -57,6 +55,17 @@ function run(argv) {
 	if ( shell.exec( cmd[a] ).code !== 0 ) {
 		log( c.red.bold("Shell exec failed!") );
 	}
+}
+function sync() {
+	let conf = fs.readFileSync(d+"build"+DS+"config.js", "utf8");
+	conf = JSON.parse(conf);
+	let exp = {
+		F: conf.F,
+		I: conf.I,
+		O: conf.O,
+		C: conf.C
+	};
+	fs.writeFileSync( "./.sway/config.json", JSON.stringify(exp, null, 4) );
 }
 function init(argv) {
 	log( c.magenta("Checking requirements...") );
@@ -86,6 +95,7 @@ function init(argv) {
 		fs.ensureDirSync(dir);
 		fs.copySync(d+ "skeleton/", "./", {overwrite: false});
 		fs.writeFileSync("./.sway/init");
+		sync();
 		log( "\t", c.green.bold("✔"), c.green("Successfuly initialized!") );
 	}
 	

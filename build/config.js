@@ -1,6 +1,7 @@
 const fs = require("fs");
 const DS = require("path").sep;
 const shell = require("shelljs");
+shell.env.Path += ";./node_modules/.bin";
 let env  = fs.readFileSync("./.sway/"+ "env", "utf8");
 
 const DEBUG_HARD    = "debug-hard";
