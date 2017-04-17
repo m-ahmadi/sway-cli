@@ -3,7 +3,7 @@
   "description": "Lowlevel modular frontend framework.",
   "version": "0.0.1",
   "bin" : {
-    "sway": "index.js",
+    "sway": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
