@@ -43,7 +43,7 @@ y.command("build-debug-normal", "Build and compile everything according to debug
 y.command("build-debug-light", "Build and compile everything according to debug-light environment.", {}, run);
 y.command("build-release-light", "Build and compile everything according to release-light environment.", {}, run);
 y.command("build-release-hard", "Build and compile everything according to release-hard environment.", {}, run);
-y.command("sync", "Sync local sway config with the global.", {}, sync);
+y.command("sync", "Sync the local Sway config with the global one.", {}, sync);
 
 var cmd = require("./commands");
 y.argv;
@@ -57,8 +57,8 @@ function run(argv) {
 	}
 }
 function sync() {
-	let conf = fs.readFileSync(d+"build"+DS+"config.js", "utf8");
-	conf = JSON.parse(conf);
+	log( c.white.bold("Syncing...") );
+	let conf = require("./build/config");
 	let exp = {
 		F: conf.F,
 		I: conf.I,
@@ -66,6 +66,7 @@ function sync() {
 		C: conf.C
 	};
 	fs.writeFileSync( "./.sway/config.json", JSON.stringify(exp, null, 4) );
+	log(c.green.bold("\t Done."), c.green.bold("✔"));
 }
 function init(argv) {
 	log( c.magenta("Checking requirements...") );
