@@ -88,16 +88,16 @@ function init(argv) {
 		shell.exec("npm install m-ahmadi/sway --save-dev");
 		log( "\t Local dependencies:", c.green.bold("✔") );
 	}
-	log( c.magenta("Initializing project skeleton...\n") );
+	log( c.magenta("Initializing project skeleton...") );
 	
 	if ( fs.existsSync(dir) ) {
-		log(c.red.bold("✖"), c.yellow("Already initialized.") );
+		log("\n", c.red.bold("✖"), c.yellow("Already initialized.") );
 	} else {
 		fs.ensureDirSync(dir);
 		fs.copySync(d+ "skeleton/", "./", {overwrite: false});
 		fs.writeFileSync("./.sway/init");
 		sync();
-		log(c.green.bold("✔"), c.green("Successfuly initialized!") );
+		log("\n", c.green.bold("✔"), c.green("Successfuly initialized!") );
 	}
 	
 }
