@@ -91,13 +91,13 @@ function init(argv) {
 	log( c.magenta("Initializing project skeleton...") );
 	
 	if ( fs.existsSync(dir) ) {
-		log( "\t", c.red.bold("✖"), c.yellow("already initialized.") );
+		log(c.red.bold("✖"), c.yellow("Already initialized.") );
 	} else {
 		fs.ensureDirSync(dir);
 		fs.copySync(d+ "skeleton/", "./", {overwrite: false});
 		fs.writeFileSync("./.sway/init");
 		sync();
-		log( "\t", c.green.bold("✔"), c.green("Successfuly initialized!") );
+		log(c.green.bold("✔"), c.green("Successfuly initialized!") );
 	}
 	
 }
