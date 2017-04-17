@@ -1,10 +1,10 @@
-const DS = require("path").sep;
-const CONF = require(__dirname+DS+ "config");
+const CONF = require("./.sway/config");
 const c = require("colors/safe");
 const fs = require("fs-extra");
-const shell = require("shelljs");
 const u = require("util-ma");
 const log = console.log;
+const shell = require("shelljs");
+shell.env.Path += ";./node_modules/.bin";
 
 let w = process.argv[2] || "css";
 let W = w.toUpperCase();

@@ -1,5 +1,4 @@
-const DS = require("path").sep;
-const CONF = require("./node_modules"+DS+"sway"+DS+"build"+DS+"config");
+const CONF = require("./.sway/config");
 
 const gulp = require("gulp");
 const shell = require("gulp-shell");

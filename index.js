@@ -17,8 +17,7 @@ y.alias("h", "help");
 y.demandCommand(1, "You must specifiy a command to run.");
 y.help("h");
 
-y.command("init", "Initialize new empty project.", {}, init);
-
+y.command("init", "Initialize project skeleton.", {}, init);
 y.command("html", "Compile HTML.", {}, run);
 y.command("sass", "Compile Sass.", {}, run);
 y.command("temp", "Compile dynamic templates.", {}, run);
@@ -44,8 +43,10 @@ y.command("build-debug-normal", "Build and compile everything according to debug
 y.command("build-debug-light", "Build and compile everything according to debug-light environment.", {}, run);
 y.command("build-release-light", "Build and compile everything according to release-light environment.", {}, run);
 y.command("build-release-hard", "Build and compile everything according to release-hard environment.", {}, run);
+y.command("sync", "Sync local sway config with the global.", {}, () => {
+	fs.copySync(d+".sway/config.js", "./.sway/config.js");
+});
 
-debugger
 var cmd = require("./commands");
 y.argv;
 
@@ -85,7 +86,6 @@ function init(argv) {
 		fs.ensureDirSync(dir);
 		fs.copySync(d+ "skeleton/", "./", {overwrite: false});
 		fs.writeFileSync("./.sway/init");
-		fs.writeFileSync("./.sway/env", "debug-normal", "utf8");
 		log( "\t", c.green.bold("✔"), c.green("Successfuly initialized!") );
 	}
 	
