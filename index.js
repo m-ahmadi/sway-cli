@@ -57,7 +57,7 @@ function run(argv) {
 	}
 }
 function sync() {
-	log( c.white.bold("Syncing...") );
+	log( c.magenta("Syncing...") );
 	let conf = require("./build/config");
 	let exp = {
 		F: conf.F,
@@ -66,7 +66,7 @@ function sync() {
 		C: conf.C
 	};
 	fs.writeFileSync( "./.sway/config.json", JSON.stringify(exp, null, 4) );
-	log(c.green.bold("\t Done."), c.green.bold("✔"));
+	log("\t Done.", c.green.bold("✔"));
 }
 function init(argv) {
 	log( c.magenta("Checking requirements...") );
@@ -88,7 +88,7 @@ function init(argv) {
 		shell.exec("npm install m-ahmadi/sway --save-dev");
 		log( "\t Local dependencies:", c.green.bold("✔") );
 	}
-	log( c.magenta("Initializing project skeleton...") );
+	log( c.magenta("Initializing project skeleton...\n") );
 	
 	if ( fs.existsSync(dir) ) {
 		log(c.red.bold("✖"), c.yellow("Already initialized.") );
