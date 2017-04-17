@@ -1,5 +1,5 @@
 {
-  "name": "sway",
+  "name": "sway-cli",
   "description": "Lowlevel modular frontend framework.",
   "version": "0.0.1",
   "bin" : {
