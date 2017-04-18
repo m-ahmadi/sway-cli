@@ -194,7 +194,7 @@ function parseList(filePath) {
 	let s = [];
 	let t = fs.readFileSync(filePath, "utf8").split("\n");
 	t.forEach((i, x) => {
-		if ( !i.startsWith("//") ) {
+		if ( /\S/.test(i) && !i.startsWith("//") ) {
 			if ( i.startsWith("@") ) {
 				s.push( i.slice(1).trim() );
 			} else {
