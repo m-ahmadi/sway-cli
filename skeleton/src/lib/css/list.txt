@@ -1,2 +1,0 @@
-byekan-fontface
-font-awesome

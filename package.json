@@ -1,10 +1,11 @@
 {
   "name": "sway-cli",
-  "description": "Lowlevel modular frontend framework.",
+  "description": "Command line interface for sway.",
   "version": "0.0.1",
-  "bin" : {
+  "bin": {
     "sway": "index.js"
   },
+  "preferGlobal": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,10 +18,10 @@
   "devDependencies": {},
   "dependencies": {
     "colors": "^1.1.2",
+    "commander": "^2.9.0",
     "fs-extra": "^2.1.2",
     "line-by-line": "^0.1.5",
     "shelljs": "^0.7.7",
-    "util-ma": "^1.0.9",
-    "yargs": "^7.1.0"
+    "util-ma": "^1.0.9"
   }
 }

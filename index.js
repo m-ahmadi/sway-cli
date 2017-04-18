@@ -4,52 +4,49 @@ const fs = require("fs-extra");
 const path = require("path");
 const DS = path.sep;
 const shell = require("shelljs");
-const y = require("yargs");
+const m = require("commander");
 const log = console.log;
 const d = __dirname + DS;
 const dir = "./.sway/";
 const pkg = "./package.json";
 
-y.usage("Usage: \n $0 command");
-y.version();
-y.options( require("./yOpts") );
-y.alias("h", "help");
-y.demandCommand(1, "You must specifiy a command to run.");
-y.help("h");
+m.usage("Usage: \n $0 command");
+m.version(""+ JSON.parse(fs.readFileSync(d+"package.json", "utf8")).version, "-v, --version");
 
-y.command("init", "Initialize project skeleton.", {}, init);
-y.command("html", "Compile HTML.", {}, run);
-y.command("sass", "Compile Sass.", {}, run);
-y.command("temp", "Compile dynamic templates.", {}, run);
-y.command("js", "Compile JavaScript.", {}, run);
-y.command("html-w", "Watch HTML.", {}, run);
-y.command("sass-w", "Watch Sass.", {}, run);
-y.command("temp-w", "Watch dynamic templates.", {}, run);
-y.command("js-w", "Watch JavaScript", {}, run);
-y.command("compile-all", "Compile everything.", {}, run);
-y.command("livereload", "Enable livereload for: dist/index.html, dist/css and dist/js", {}, run);
-y.command("env-debug-hard", "Set current environment to debug-hard.", {}, run);
-y.command("env-debug-normal", "Set current environment to debug-normal.", {}, run);
-y.command("env-debug-light", "Set current environment to debug-light.", {}, run);
-y.command("env-release", "Set current environment to release-light.", {}, run);
-y.command("showenv", "Show current environment.", {}, run);
-y.command("libcss", "Build CSS dependencies based on current environment.", {}, run);
-y.command("libjs", "Build JS dependencies based on current environment.", {}, run);
-y.command("build-libs", "Build CSS and JS dependencies based on current environment.", {}, run);
-y.command("build", "Build dependencies and compile everything based on current environment.", {}, run);
-y.command("release", "Custom release.", {}, run);
-y.command("build-debug-hard", "Build and compile everything according to debug-hard environment.", {}, run);
-y.command("build-debug-normal", "Build and compile everything according to debug-normal environment.", {}, run);
-y.command("build-debug-light", "Build and compile everything according to debug-light environment.", {}, run);
-y.command("build-release-light", "Build and compile everything according to release-light environment.", {}, run);
-y.command("build-release-hard", "Build and compile everything according to release-hard environment.", {}, run);
-y.command("sync", "Sync the local Sway config with the global one.", {}, sync);
+m.command("init").description("Initialize project skeleton.".action(init);
+m.command("html").description("Compile HTML.".action(run);
+m.command("sass").description("Compile Sass.".action(run);
+m.command("temp").description("Compile dynamic templates.".action(run);
+m.command("js").description("Compile JavaScript.".action(run);
+m.command("html-w").description("Watch HTML.".action(run);
+m.command("sass-w").description("Watch Sass.".action(run);
+m.command("temp-w").description("Watch dynamic templates.".action(run);
+m.command("js-w").description("Watch JavaScript".action(run);
+m.command("compile-all").description("Compile everything.".action(run);
+m.command("livereload").description("Enable livereload for: dist/index.html, dist/css and dist/js".action(run);
+m.command("env-debug-hard").description("Set current environment to debug-hard.".action(run);
+m.command("env-debug-normal").description("Set current environment to debug-normal.".action(run);
+m.command("env-debug-light").description("Set current environment to debug-light.".action(run);
+m.command("env-release").description("Set current environment to release-light.".action(run);
+m.command("showenv").description("Show current environment.".action(run);
+m.command("libcss").description("Build CSS dependencies based on current environment.".action(run);
+m.command("libjs").description("Build JS dependencies based on current environment.".action(run);
+m.command("build-libs").description("Build CSS and JS dependencies based on current environment.".action(run);
+m.command("build").description("Build dependencies and compile everything based on current environment.".action(run);
+m.command("release").description("Custom release.".action(run);
+m.command("build-debug-hard").description("Build and compile everything according to debug-hard environment.".action(run);
+m.command("build-debug-normal").description("Build and compile everything according to debug-normal environment.".action(run);
+m.command("build-debug-light").description("Build and compile everything according to debug-light environment.".action(run);
+m.command("build-release-light").description("Build and compile everything according to release-light environment.".action(run);
+m.command("build-release-hard").description("Build and compile everything according to release-hard environment.".action(run);
+m.command("sync").description("Sync the local Sway config with the global one.".action(sync);
 
 var cmd = require("./commands");
-y.argv;
+m.parse(process.argv);
+if (!m.args.length) { m.help(); }
 
-function run(argv) {
-	let a = argv._[0];
+function run(command) {
+	let a = command._name;
 	shell.env.Path += ";./node_modules/.bin";
 //	shell.env.Path += ";"+__dirname+DS+"node_modules"+DS+".bin";
 	if ( shell.exec( cmd[a] ).code !== 0 ) {
@@ -94,7 +91,7 @@ function init(argv) {
 		log("\n", c.red.bold("✖"), c.yellow("Already initialized.") );
 	} else {
 		fs.ensureDirSync(dir);
-		fs.copySync(d+ "skeleton/", "./", {overwrite: false});
+		fs.copySync("./node_modules/sway/skeleton/", "./", {overwrite: false});
 		fs.writeFileSync("./.sway/init");
 		sync();
 		log("\n", c.green.bold("✔"), c.green("Successfuly initialized!") );
