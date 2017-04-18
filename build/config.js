@@ -20,8 +20,8 @@ let hInd   = "    ";
 const F = {
 	HTML:    "index.html",
 	TEMP:    "templates.js",
-	CLL:     "libcss.js",
-	JLL:     "libjs.js",
+	CLL:     "list.txt",
+	JLL:     "list.txt",
 	SASS:    "style.scss",
 	CSS:     "style",
 	APP:     "app",
@@ -80,8 +80,8 @@ const L = {
 // works in local and global
 const R = process.cwd() + DS;
 const L = {
-	CSS: R + `src${DS}lib${DS+ F.CLL}`,
-	JS:  R + `src${DS}lib${DS+ F.JLL}`
+	CSS: R + `src${DS}lib${DS}css${DS+ F.CLL}`,
+	JS:  R + `src${DS}lib${DS}js${DS+ F.JLL}`
 };
 
 

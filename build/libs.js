@@ -17,7 +17,7 @@ let iDir, oDir, list, last, temp, app, sepLib,
 	rqName, rqSrc, rqDest;
 
 setConfig();
-list = require(list),
+list = parseList(list),
 last = list[ list.length - 1 ];
 
 log(c.white.bold("Building", c.white.bold.bgBlue(` ${W} `), "libs for environment:"), c.black.bgWhite(` ${CONF.env} \n`));
@@ -187,9 +187,21 @@ function msg(w, a, b) {
 		log(a); break;
 	case 2:
 		log( c.white("\t (Make sure the list in:"), c.blue.bold(listPath), "is correct.)\n" ); break;
-	case 3:
-		break;
-	
-		
 	}
+}
+function parseList(filePath) {
+	let o = [];
+	let s = [];
+	let t = fs.readFileSync(filePath, "utf8").split("\n");
+	t.forEach((i, x) => {
+		if ( !i.startsWith("//") ) {
+			if ( i.startsWith("@") ) {
+				s.push( i.slice(1).trim() );
+			} else {
+				o.push( i.trim() );
+			}
+		}
+	});
+	o.push(s);
+	return o;
 }
