@@ -1,41 +1,17 @@
 const DS = require("path").sep;
-const CONF = require(__dirname+DS+ "config");
 const c = require("colors/safe");
 const fs = require("fs-extra");
 const u = require("util-ma");
-const log = console.log;
 const shell = require("shelljs");
+const log = console.log;
 shell.env.Path += ";./node_modules/.bin";
 
-let w = process.argv[2] || "css";
-let W = w.toUpperCase();
-let js = w === "js";
-let css = w === "css";
+let CONF;
+let w, W, js, css;
 
 let iDir, oDir, list, last, temp, app, sepLib,
-	listPath = CONF.L[W].slice(3),
+	listPath,
 	rqName, rqSrc, rqDest;
-
-setConfig();
-list = parseList(list),
-last = list[ list.length - 1 ];
-
-log(c.white.bold("Building", c.white.bold.bgBlue(` ${W} `), "libs for environment:"), c.black.bgWhite(` ${CONF.env} \n`));
-fs.emptyDirSync( CONF.O[ W ] );
-checkRq();
-
-if (CONF.env === CONF.DEBUG_HARD) {
-	debugHard();
-	
-} else if (CONF.env === CONF.DEBUG_NORMAL) {
-	common(true, true);
-} else if (CONF.env === CONF.DEBUG_LIGHT) {
-	common(true);
-} else if (CONF.env === CONF.RELEASE_LIGHT) {
-	common(false);
-} else if (CONF.env === CONF.RELEASE_HARD) {
-	
-}
 
 function setConfig() {
 	if (css) {
@@ -205,3 +181,42 @@ function parseList(filePath) {
 	o.push(s);
 	return o;
 }
+
+function start(which) {
+	if (!which) {
+		log( c.red.bold("✖"), c.magenta.bold("Must specify which deps to build.") );
+		return;
+	} else if (which !== "css" && which !== "js") {
+		log( c.red.bold("✖"), c.magenta.bold("Unkown option:"), c.yellow(which), "\n [css|js]" );
+		return;
+	}
+	CONF = require("../core/config");
+	
+	w = which || "css";
+	W = w.toUpperCase();
+	js = w === "js";
+	css = w === "css";
+	listPath = CONF.L[W].slice(3);
+	
+	setConfig();
+	list = parseList(list),
+	last = list[ list.length - 1 ];
+
+	log(c.white.bold("Building", c.white.bold.bgBlue(` ${W} `), "libs for environment:"), c.black.bgWhite(` ${CONF.env} \n`));
+	fs.emptyDirSync( CONF.O[ W ] );
+	checkRq();
+
+	if (CONF.env === CONF.DEBUG_HARD) {
+		debugHard();
+		
+	} else if (CONF.env === CONF.DEBUG_NORMAL) {
+		common(true, true);
+	} else if (CONF.env === CONF.DEBUG_LIGHT) {
+		common(true);
+	} else if (CONF.env === CONF.RELEASE_LIGHT) {
+		common(false);
+	} else if (CONF.env === CONF.RELEASE_HARD) {
+		
+	}
+}
+module.exports = start;

@@ -11,7 +11,6 @@ const toMakeDirs = ["css", "fonts", "images", "js"];
 
 const LineByLineReader = require("line-by-line");
 const copydir = require("copy-dir");
-const lr = new LineByLineReader(INPUT_HTML);
 const fs = require("fs");
 const path = require("path");
 const colors = require("colors/safe");
@@ -24,49 +23,6 @@ const src = 'src="/static/';
 const dataMain = 'data-main="/static/';
 // handle index.html
 let html = "";
-lr.on("error", err => { console.log( colors.red.bold("Something went wrong!") ); });
-lr.on("line", line => {
-	let isLink = link.exec(line);
-	let isScript = script.exec(line);
-	let isImg = img.exec(lin);
-	
-	let newLine;
-	if (isLink) {
-		newLine = line.replace(/href="/, href);
-	} else if (isImg) {
-		newLine = line.replace(/src="/, src);
-	} else if (isScript) {
-		newLine = line.replace(/src="/ , src);
-		if ( /data-main="/.test(line) ) {
-			newLine = newLine.replace(/data-main="/ , dataMain);
-		}
-	} else {
-		newLine = line;
-	}
-	html += `${newLine}\n`
-});
-lr.on("end", a => {
-	fs.writeFileSync(`${OUT_DIR}/${OUT_HTML}`, html);
-});
-
-// handle copying folders
-mkdirIf(OUT_DIR);
-mkdirIf(ASSETS);
-toMakeDirs.forEach(i => {
-	let p = `${ASSETS}/${i}`;
-	mkdirSafe(p);
-	copydir.sync(ROOT+i, p);
-});
-
-// handle edge cases
-change(ASSETS+"/js/core/config.js", "ROOT.*", 'ROOT: "/static/"');
-change(ASSETS+"/js/main.js", "baseUrl.*", 'baseUrl: "/static/js/",');
-
-console.log(
-	colors.yellow("Release build"), colors.green.bold("done."),
-	colors.magenta.bold("\nOutput dir: "),
-	colors.blue.bold(OUT_DIR)
-);
 
 function mkdirSafe(p) {
 	if (p.indexOf("/") !== -1) {
@@ -101,3 +57,52 @@ function set(arg) {
 	}
 	return DEFAULT[ arg.slice(2) ];
 }
+
+function start() {
+	const lr = new LineByLineReader(INPUT_HTML);
+	lr.on("error", err => { console.log( colors.red.bold("Something went wrong!") ); });
+	lr.on("line", line => {
+		let isLink = link.exec(line);
+		let isScript = script.exec(line);
+		let isImg = img.exec(lin);
+		
+		let newLine;
+		if (isLink) {
+			newLine = line.replace(/href="/, href);
+		} else if (isImg) {
+			newLine = line.replace(/src="/, src);
+		} else if (isScript) {
+			newLine = line.replace(/src="/ , src);
+			if ( /data-main="/.test(line) ) {
+				newLine = newLine.replace(/data-main="/ , dataMain);
+			}
+		} else {
+			newLine = line;
+		}
+		html += `${newLine}\n`
+	});
+	lr.on("end", a => {
+		fs.writeFileSync(`${OUT_DIR}/${OUT_HTML}`, html);
+	});
+
+	// handle copying folders
+	mkdirIf(OUT_DIR);
+	mkdirIf(ASSETS);
+	toMakeDirs.forEach(i => {
+		let p = `${ASSETS}/${i}`;
+		mkdirSafe(p);
+		copydir.sync(ROOT+i, p);
+	});
+
+	// handle edge cases
+	change(ASSETS+"/js/core/config.js", "ROOT.*", 'ROOT: "/static/"');
+	change(ASSETS+"/js/main.js", "baseUrl.*", 'baseUrl: "/static/js/",');
+
+	console.log(
+		colors.yellow("Release build"), colors.green.bold("done."),
+		colors.magenta.bold("\nOutput dir: "),
+		colors.blue.bold(OUT_DIR)
+	);
+}
+
+module.exports = start;
