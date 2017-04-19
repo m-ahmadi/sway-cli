@@ -45,7 +45,7 @@ function debugHard() {
 	fs.copySync(rqSrc, rqDest);
 	
 	fs.writeFileSync(temp, toWrite, "utf8");
-	log( "\nFile:", c.green(temp), "generated." );
+	log( "\t File:", c.green(temp), "created." );
 	log( c.green("Done.") );
 }
 function common(srcmap, unminApp) {
