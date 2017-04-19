@@ -33,7 +33,7 @@ function init() {
 		fs.ensureDirSync(dir);
 		fs.copySync("./node_modules/sway/skeleton/", "./", {overwrite: false});
 		fs.writeFileSync("./.sway/init");
-		sync();
+		require("./sync")();
 		log("\n", c.green.bold("✔"), c.green("Successfuly initialized!") );
 	}
 }

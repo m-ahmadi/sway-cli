@@ -10,8 +10,7 @@ const INPUT_HTML = ROOT+"index.html";
 const toMakeDirs = ["css", "fonts", "images", "js"];
 
 const LineByLineReader = require("line-by-line");
-const copydir = require("copy-dir");
-const fs = require("fs");
+const fs = require("fs-extra");
 const path = require("path");
 const colors = require("colors/safe");
 
@@ -91,7 +90,7 @@ function start() {
 	toMakeDirs.forEach(i => {
 		let p = `${ASSETS}/${i}`;
 		mkdirSafe(p);
-		copydir.sync(ROOT+i, p);
+		fs.copySync(ROOT+i, p);
 	});
 
 	// handle edge cases

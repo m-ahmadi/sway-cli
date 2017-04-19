@@ -1,5 +1,6 @@
 const c = require("colors/safe");
 const fs = require("fs");
+const log = console.log;
 
 module.exports = () => {
 	log( c.magenta("Syncing...") );
