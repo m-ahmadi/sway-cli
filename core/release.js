@@ -63,7 +63,7 @@ function start() {
 	lr.on("line", line => {
 		let isLink = link.exec(line);
 		let isScript = script.exec(line);
-		let isImg = img.exec(lin);
+		let isImg = img.exec(line);
 		
 		let newLine;
 		if (isLink) {
