@@ -1,5 +1,9 @@
 const fs = require("fs-extra");
 const c = require("colors/safe");
+const shell = require("shelljs");
+const log = console.log;
+const dir = "./.sway/";
+const pkg = "./package.json";
 
 function init() {
 	log( c.magenta("Checking requirements...") );

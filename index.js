@@ -9,8 +9,7 @@ const u = require("util-ma");
 const DS = path.sep;
 const log = console.log;
 const d = __dirname + DS;
-const dir = "./.sway/";
-const pkg = "./package.json";
+
 
 m.usage("command [options]");
 m.version(""+ JSON.parse(fs.readFileSync(d+"package.json", "utf8")).version, "-v, --version");
