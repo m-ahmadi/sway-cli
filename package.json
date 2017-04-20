@@ -21,6 +21,7 @@
     "commander": "^2.9.0",
     "fs-extra": "^2.1.2",
     "line-by-line": "^0.1.5",
+	"readline-sync": "^1.4.7",
     "shelljs": "^0.7.7",
     "util-ma": "^1.0.9"
   }

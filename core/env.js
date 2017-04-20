@@ -5,9 +5,11 @@ const envsList = require("./envs-list");
 
 const succ = c.green.bold("✔");
 const fail = c.red.bold("✖");
-const main = c.magenta.bold;
+const main = c.magenta;
 const bg = c.black.bgWhite
 module.exports = function (envName) {
+	if ( !require("./checkcwd")() ) return;
+
 	let p = "./.sway/env";
 	if (envName) {
 		if ( envsList.indexOf(envName) !== -1 ) {

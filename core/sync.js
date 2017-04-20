@@ -3,6 +3,8 @@ const fs = require("fs");
 const log = console.log;
 
 module.exports = () => {
+	if ( !require("./checkcwd")() ) return;
+	
 	log( c.magenta("Syncing...") );
 	let conf = require("./config");
 	let exp = {
