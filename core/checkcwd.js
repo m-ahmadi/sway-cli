@@ -49,6 +49,7 @@ const ignores = [
 ];
 function init() {
 	if ( !isInit() ) {
+		say ? log(i1) : undefined;
 		fs.ensureDirSync(dir);
 		fs.copySync("./node_modules/sway/skeleton/", "./", {overwrite: false});
 		fs.writeFileSync("./.sway/init");
@@ -80,6 +81,24 @@ function isSway() {
 		}
 	}
 	return false;
+}	
+function initNoQ() {
+	log( m1+fail );
+	log( m2+fail );
+	log( mi+fail );
+	createPkg();
+	log( m1+succ );
+	log( m2+fail );
+	log( mi+fail );
+	install();
+	log( m1+succ );
+	log( m2+succ );
+	log( mi+fail );
+	init()
+	log( m1+succ );
+	log( m2+succ );
+	log( mi+succ );
+	log(i3);
 }
 function ques3() {
 	let ans = readlineSync.question(q3);
@@ -126,7 +145,7 @@ function check() {
 	}
 	return 0;
 }
-function act(code) {
+function act(code, noQes) {
 	if (code === 1 || code === 2) {
 		changed ? log( mag(m3), cyn( process.cwd() ) ) : undefined;
 	}
@@ -164,7 +183,7 @@ function act(code) {
 		}
 	}
 }
-function look() {
+function look(noLookup) {
 	let r = check();
 	let res = false;
 	if (r === 3) {
@@ -174,6 +193,9 @@ function look() {
 	} else if (r === 1) {
 		res = act(r);
 	} else if (r === 0) {
+		if (noLookup) {
+			res = initNoQ();
+		}
 		process.chdir("../");
 		changed = true;
 		if ( !path.basename( process.cwd() ) ) { // root
@@ -188,6 +210,6 @@ module.exports = function (verbose) {
 	debugger
 	say = verbose;
 	say ? log( mag("Checking requirements...") ) : undefined;
-	let r = look();
+	let r = look(verbose);
 	return r;
 };
