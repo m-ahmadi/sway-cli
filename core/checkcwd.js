@@ -194,7 +194,8 @@ function look(noLookup) {
 		res = act(r);
 	} else if (r === 0) {
 		if (noLookup) {
-			res = initNoQ();
+			initNoQ();
+			return;
 		}
 		process.chdir("../");
 		changed = true;
