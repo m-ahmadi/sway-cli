@@ -20,10 +20,10 @@ const checkCwd = require("./core/checkcwd");
 m.usage("command [options]");
 m.version(""+ JSON.parse(fs.readFileSync(d+"package.json", "utf8")).version, "-v, --version");
 
-m.command("check")
+/* m.command("check")
 	.description("Initialize project skeleton.")
 	.option("-s, --say", "some options")
-	.action( require("./core/checkcwd") );
+	.action( require("./core/checkcwd") ); */
 
 m.command("init").description("Initialize project skeleton.").action( ()=>checkCwd(true) );
 m.command("html").description("Compile HTML.").action(run);
