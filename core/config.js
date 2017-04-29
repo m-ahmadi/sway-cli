@@ -122,7 +122,6 @@ if (env === DEBUG_HARD) {
 }
 
 if (shell.exec("sass -v", {silent: true}).code !== 0) { // no sass
-	shell.exit(1);
 	C.sass = nsas;
 } else {
 	C.sass = sas;

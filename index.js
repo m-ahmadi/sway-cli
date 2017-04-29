@@ -7,6 +7,7 @@ const m = require("commander");
 const u = require("util-ma");
 
 const DS = path.sep;
+const DL = path.delimiter;
 const log = console.log;
 const d = __dirname + DS;
 
@@ -56,8 +57,7 @@ function run(cmd) {
 	
 	let t = u.isObj(cmd) ? commands[cmd._name] : u.isStr(cmd) ? commands[cmd] : undefined;
 	if (!t) return;
-	shell.env.Path += ";./node_modules/.bin";
-//	shell.env.Path += ";"+__dirname+DS+"node_modules"+DS+".bin";
+	shell.env.PATH += DL+"./node_modules/.bin";
 	shell.exec(t).code !== 0 ?
 		log( c.red.bold("Shell exec failed!") ) : undefined;
 }
