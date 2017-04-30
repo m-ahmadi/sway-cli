@@ -1,10 +1,12 @@
-const DS = require("path").sep;
+const path = require("path");
 const c = require("colors/safe");
 const fs = require("fs-extra");
 const u = require("util-ma");
 const shell = require("shelljs");
+const DS = path.sep;
+const DL = path.delimiter;
 const log = console.log;
-shell.env.Path += ";./node_modules/.bin";
+shell.env.PATH += DL+"./node_modules/.bin";
 
 let CONF;
 let w, W, js, css;
