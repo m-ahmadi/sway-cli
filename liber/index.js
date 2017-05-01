@@ -140,7 +140,7 @@ function appHtml(v) {
 	return `<script data-main="js/${v}" src="js/lib/${rqName}"></script>`;
 }
 function checkRq() {
-	let name = "require";
+	let name = "requirejs/require";
 	let path = CONF.I.SLIBJ + name;
 	let min = ".min.js";
 	let unmin = ".js";
