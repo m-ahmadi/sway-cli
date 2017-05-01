@@ -41,11 +41,12 @@ let finalResult = false;
 const dir = "./.sway/";
 const ignores = [
 	"node_modules/",
-	".sass-cache/*",
+	".sass-cache/",
 	"release/*",
 	"dist/css/*",
 	"dist/js/*",
 	"dist/index.html",
+	"src/lib/*/"
 ];
 function init() {
 	if ( !isInit() ) {

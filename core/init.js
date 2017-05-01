@@ -14,7 +14,7 @@ module.exports = () => {
 	} else {
 		fs.ensureDirSync(dir);
 		fs.copySync("./node_modules/sway/skeleton/", "./", {overwrite: false});
-		fs.writeFileSync("./.sway/init");
+		fs.writeFileSync("./.sway/init", "");
 		require("./sync")();
 		log("\n", c.green.bold("✔"), c.green("Successfuly initialized!") );
 	}
