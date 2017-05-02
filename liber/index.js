@@ -44,7 +44,7 @@ function debugHard() {
 	toWrite = forEachLib(list, true);
 	toWrite += css ? html(`${w}/style.css`) : appHtml("main");
 	
-	fs.copySync(rqSrc, rqDest);
+	copyRq();
 	
 	fs.writeFileSync(temp, toWrite, "utf8");
 	log( "\t File:", c.green(temp), "created." );
@@ -95,7 +95,7 @@ function common(srcmap, unminApp) {
 		toWrite += js && !unminApp ? appHtml(app) : js && unminApp ? appHtml("main") : "";
 	}
 	
-	fs.copySync(rqSrc, rqDest);
+	copyRq();
 	
 	fs.writeFileSync(temp, toWrite, "utf8");
 	log( "\t File:", c.cyan(temp), "created." );
@@ -151,7 +151,6 @@ function checkRq() {
 	} else if ( fs.existsSync(pth + unmin) ) {
 		pth += unmin;
 		name += unmin;
-	//	fs.copySync(path, CONF.O.SEPLJ + name);
 	} else {
 		log( c.red.bold("The RequireJS library is necessary, and it's not found.") );
 	}
@@ -159,6 +158,16 @@ function checkRq() {
 	rqName = name;
 	rqSrc = pth;
 	rqDest = CONF.O.SEPLJ + name;
+}
+function copyRq() {
+	if ( rqDest.endsWith("require.js") ) {
+		if (shell.exec(`uglifyjs ${rqSrc} -o ${CONF.O.SEPLJ}require.min.js`).code !== 0) {
+			shell.echo( c.red.bold("\t Minifying requirejs failed.") );
+			shell.exit(1);
+		}
+	} else {
+		fs.copySync(rqSrc, rqDest);
+	}
 }
 function msg(w, a, b) {
 	switch (w) {
