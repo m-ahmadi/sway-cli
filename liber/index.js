@@ -39,10 +39,10 @@ function debugHard() {
 	
 	let toWrite = "";
 	log( c.yellow("Copying...") );
-	fs.emptyDirSync(oDir);
+	clearDir();
 	
 	toWrite = forEachLib(list, true);
-	toWrite += css ? html(`${w}/style.css`) : appHtml("main");
+	toWrite += css ? html(`style.css`) : appHtml("main");
 	
 	copyRq();
 	
@@ -54,10 +54,9 @@ function common(srcmap, unminApp) {
 	let separates = u.isArr(last) ? list.pop() : undefined;
 	
 	log( c.yellow("Libs...") );
-	let toCat = forEachLib(list, false); 
+	let toCat = forEachLib(list, false);
 	
-	let libDir = CONF.O[W] + "lib";
-	fs.emptyDirSync(libDir);
+	clearDir();
 	
 	let outFile = oDir;
 	let catenated = shell.cat(toCat);
@@ -81,7 +80,7 @@ function common(srcmap, unminApp) {
 	
 	let toWrite = "";
 	
-	toWrite += html(`${w}/lib/${CONF.F.LIB}.${w}`) + "\n";
+	toWrite += html(`${CONF.F.LIB}.${w}`) + "\n";
 	toWrite += css ? `<link rel="styleSheet" type="text/css" href="css/${app}" />` : "";
 	if (separates) {
 		log( c.yellow("Separate lib(s)...") );
@@ -106,12 +105,13 @@ function forEachLib(list, sw, sep) {
 	let occurred = false;
 	list.forEach(i => {
 		let file = i + "." + w;
+		let fileBasename = path.basename(file);
 		let src  = iDir + file;
 		let dest = sep ? sepLib : oDir;
-		dest += path.basename(file);
+		dest += fileBasename;
 		if ( fs.existsSync(src) ) {
 			sw ? fs.copySync(src, dest) : toRet.push(src);
-			sw ? toRet += html( `${w}/lib/`+ path.basename(file) ) + "\n" : undefined;
+			sw ? toRet += html(fileBasename) + "\n" : undefined;
 		} else {
 			occurred = true;
 			let err = c.red.bold("\t Couldn't find: ") + c.white.bold.bgRed(` ${file} `);
@@ -119,7 +119,7 @@ function forEachLib(list, sw, sep) {
 			if ( fs.existsSync(src) ) {
 				err += c.green.bold("  Found: ") + c.magenta(file+".min");
 				sw ? fs.copySync(src, dest) : toRet.push(src);
-				sw ? toRet += html( `${w}/lib/`+ path.basename(file) ) + "\n" : undefined;
+				sw ? toRet += html(fileBasename) + "\n" : undefined;
 			} else {
 				err += c.red.bold(" or ") + c.white.bold.bgRed(` ${file} `);
 			}
@@ -131,9 +131,9 @@ function forEachLib(list, sw, sep) {
 }
 function html(v) {
 	if (css) {
-		return `<link rel="stylesheet" type="text/css" href="${v}" />`;
+		return `<link rel="stylesheet" type="text/css" href="css/${v}" />`;
 	} else if (js) {
-		return `<script type="text/javascript" src="${v}"></script>`;
+		return `<script type="text/javascript" src="js/lib/${v}"></script>`;
 	}
 }
 function appHtml(v) {
@@ -193,7 +193,20 @@ function parseList(filePath) {
 	o.push(s);
 	return o;
 }
-
+function clearDir() {
+	let dir;
+	if (css) {
+		dir = oDir;
+		if ( fs.existsSync(dir) ) {
+			if ( fs.lstatSync(dir).isDirectory() ) {
+				fs.emptyDirSync(dir);
+			}
+		}
+	} else if (js) {
+		dir = CONF.O[W] + "lib";
+		fs.emptyDirSync(dir);
+	}
+}
 function start(which) {
 	if (!which) {
 		log( c.red.bold("✖"), c.magenta.bold("Must specify which deps to build.") );

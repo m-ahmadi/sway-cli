@@ -57,7 +57,7 @@ I.SCRT  = I.HTML +  F.SCRIPTS;
 
 O.JS    = DIST   + "js/";
 O.CSS   = DIST   + "css/";
-O.CLIB  = O.CSS  + "lib/";
+O.CLIB  = O.CSS  + "";
 O.JLIB  = O.JS   + "lib/";
 O.HTML  = DIST   + F.HTML;
 O.STYLE = O.CSS  + F.CSS;
