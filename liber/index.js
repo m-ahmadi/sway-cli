@@ -108,10 +108,10 @@ function forEachLib(list, sw, sep) {
 		let file = i + "." + w;
 		let src  = iDir + file;
 		let dest = sep ? sepLib : oDir;
-		dest += file;
+		dest += path.basename(file);
 		if ( fs.existsSync(src) ) {
 			sw ? fs.copySync(src, dest) : toRet.push(src);
-			sw ? toRet += html(`${w}/lib/`+ file) + "\n" : undefined;
+			sw ? toRet += html( `${w}/lib/`+ path.basename(file) ) + "\n" : undefined;
 		} else {
 			occurred = true;
 			let err = c.red.bold("\t Couldn't find: ") + c.white.bold.bgRed(` ${file} `);
@@ -119,7 +119,7 @@ function forEachLib(list, sw, sep) {
 			if ( fs.existsSync(src) ) {
 				err += c.green.bold("  Found: ") + c.magenta(file+".min");
 				sw ? fs.copySync(src, dest) : toRet.push(src);
-				sw ? toRet += html(`${w}/lib/`+ file) + "\n" : undefined;
+				sw ? toRet += html( `${w}/lib/`+ path.basename(file) ) + "\n" : undefined;
 			} else {
 				err += c.red.bold(" or ") + c.white.bold.bgRed(` ${file} `);
 			}
@@ -141,22 +141,23 @@ function appHtml(v) {
 }
 function checkRq() {
 	let name = "requirejs/require";
-	let path = CONF.I.SLIBJ + name;
+	let pth = CONF.I.SLIBJ + name;
 	let min = ".min.js";
 	let unmin = ".js";
-	if ( fs.existsSync(path + min) ) {
-		path += min;
+	if ( fs.existsSync(pth + min) ) {
+		pth += min;
 		name += min;
 		
-	} else if ( fs.existsSync(path + unmin) ) {
-		path += unmin;
-		name += min;
-		fs.copySync(path, CONF.O.SEPLJ + name);
+	} else if ( fs.existsSync(pth + unmin) ) {
+		pth += unmin;
+		name += unmin;
+	//	fs.copySync(path, CONF.O.SEPLJ + name);
 	} else {
 		log( c.red.bold("The RequireJS library is necessary, and it's not found.") );
 	}
+	name = path.basename(name);
 	rqName = name;
-	rqSrc = path;
+	rqSrc = pth;
 	rqDest = CONF.O.SEPLJ + name;
 }
 function msg(w, a, b) {
