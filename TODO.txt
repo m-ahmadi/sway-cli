@@ -1,0 +1,22 @@
+TODO
+
+1.split each liblist line by space, and lookup in each path
+- so we can specify multiple path to look for a lib
+- useful when min/map files are not in the same dir.
+
+2.what to do when sway requirements aren't available?
+- install them? or tell user to install them?
+
+3.checkcwd and init have gotten mixed together
+- seperate them, cwdchk should only check cwd
+- and in case it changed cwd, tell the user,
+- and if it couldn't find, either promts for install or
+- tell user you must run this first.
+
+4.for release envs, grab the min files provided by vendors
+- instead of doing it on our own.
+
+5.release-light env js is broken, fix it.
+
+6.temp-w in release envs, must cause a js-compile afterwards,
+- since outjs is in one file.
