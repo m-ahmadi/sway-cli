@@ -161,7 +161,9 @@ function checkRq() {
 }
 function copyRq() {
 	if ( rqDest.endsWith("require.js") ) {
-		if (shell.exec(`uglifyjs ${rqSrc} -o ${CONF.O.SEPLJ}require.min.js`).code !== 0) {
+		const file = `${CONF.O.SEPLJ}require.min.js`;
+		fs.ensureFileSync(file);
+		if (shell.exec(`uglifyjs ${rqSrc} -o ${file}`).code !== 0) {
 			shell.echo( c.red.bold("\t Minifying requirejs failed.") );
 			shell.exit(1);
 		}
