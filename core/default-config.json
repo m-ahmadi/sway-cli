@@ -1,0 +1,76 @@
+{
+	src: {
+		dir: {
+			root: "./src",
+			html: "html/",
+			sass: "sass/",
+			temp: "template/",
+			js: "js/",
+			lib: "lib/"
+		},
+		file: {
+			style: "style.scss",
+			lnkt: "links.htm",
+			scrt: "scripts.htm"
+		}
+	},
+	dist: {
+		dir: "./dist",
+		js: "js/",
+        css: "css/",
+        clib: "css/",
+        jlib: "js/lib/",
+        html: "index.html",
+        style: "css/style.css",
+        app: "js/app.js",
+        temp: "js/templates.js",
+        seplc: "css/",
+        seplj: "js/lib/"
+	},
+    "F": {
+        "HTML": "index.html",
+        "TEMP": "templates.js",
+        "CLL": "css.list",
+        "JLL": "js.list",
+        "SASS": "style.scss",
+        "CSS": "style.css",
+        "APP": "app.js",
+        "LIB": "libs",
+        "LINKS": "links.htm",
+        "SCRIPTS": "scripts.htm"
+    },
+    "I": {
+        "JS": "./src/js/",
+        "SASS": "./src/sass/",
+        "HTML": "./src/html/",
+        "TEMP": "./src/template/",
+        "LIB": "./src/lib/",
+        "STYLE": "./src/sass/style.scss",
+        "LNKT": "./src/html/links.htm",
+        "SCRT": "./src/html/scripts.htm"
+    },
+    "O": {
+        "JS": "./dist/js/",
+        "CSS": "./dist/css/",
+        "CLIB": "./dist/css/",
+        "JLIB": "./dist/js/lib/",
+        "HTML": "./dist/index.html",
+        "STYLE": "./dist/css/style.css",
+        "APP": "./dist/js/app.js",
+        "TEMP": "./dist/js/templates.js",
+        "SEPLC": "./dist/css/",
+        "SEPLJ": "./dist/js/lib/"
+    },
+    "C": {
+        "html": "htmlbilder ./src/html/ -o ./dist/index.html -t main.handlebars -e .htm",
+        "temp": "handlebars ./src/template/ -f ./dist/js/templates.js -e hbs -m",
+        "js": "babel ./src/js/ -d ./dist/js/ -s",
+        "sass": "sass ./src/sass/style.scss:./dist/css/style.css --style expanded --sourcemap=auto",
+        "w": {
+            "html": "htmlbilder ./src/html/ -o ./dist/index.html -t main.handlebars -e .htm -w",
+            "sass": "sass ./src/sass/style.scss:./dist/css/style.css --style expanded --sourcemap=auto --watch",
+            "js": "babel ./src/js/ -d ./dist/js/ -s -w"
+        },
+        "all": "htmlbilder ./src/html/ -o ./dist/index.html -t main.handlebars -e .htm && sass ./src/sass/style.scss:./dist/css/style.css --style expanded --sourcemap=auto && handlebars ./src/template/ -f ./dist/js/templates.js -e hbs -m && babel ./src/js/ -d ./dist/js/ -s"
+    }
+}

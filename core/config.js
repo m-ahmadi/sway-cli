@@ -1,7 +1,9 @@
 const fs = require("fs");
-const DS = require("path").sep;
+const path = require("path");
 const shell = require("shelljs");
-shell.env.Path += ";./node_modules/.bin";
+const DS = path.sep;
+const DL = path.delimiter;
+shell.env.PATH += DL+"./node_modules/.bin";
 let env  = fs.readFileSync("./.sway/"+ "env", "utf8");
 
 const DEBUG_HARD    = "debug-hard";
