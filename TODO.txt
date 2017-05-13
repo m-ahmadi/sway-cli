@@ -20,3 +20,8 @@ TODO
 
 6.temp-w in release envs, must cause a js-compile afterwards,
 - since outjs is in one file.
+
+7.make handlebars precompiled temps like:
+- Handlebars.templates.name               => name.hbs
+- Handlebars.templates.folder.name        => folder/name.hbs
+- Handlebars.templates.folder.folder.name => folder/folder/name.hbs
