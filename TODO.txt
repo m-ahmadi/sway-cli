@@ -10,7 +10,7 @@ TODO
 3.checkcwd and init have gotten mixed together
 - seperate them, cwdchk should only check cwd
 - and in case it changed cwd, tell the user,
-- and if it couldn't find, either promts for install or
+- and if it couldn't find the package.json, either promts for install or
 - tell user you must run this first.
 
 4.for release envs, grab the min files provided by vendors
@@ -25,3 +25,6 @@ TODO
 - Handlebars.templates.name               => name.hbs
 - Handlebars.templates.folder.name        => folder/name.hbs
 - Handlebars.templates.folder.folder.name => folder/folder/name.hbs
+
+8.make it possible to reference a lib somewhere other than src/lib,
+- for libraries that are available in npm, but not in bower. (like pixi.js)
