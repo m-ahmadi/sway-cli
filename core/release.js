@@ -94,7 +94,7 @@ function start() {
 	});
 
 	// handle edge cases
-	change(ASSETS+"/js/core/config.js", "ROOT.*", 'ROOT: "/static/"');
+	change(ASSETS+"/js/core/config.js", "ROOT.*", 'ROOT: "/static/",');
 	change(ASSETS+"/js/main.js", "baseUrl.*", 'baseUrl: "/static/js/",');
 
 	console.log(
