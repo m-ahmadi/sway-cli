@@ -28,3 +28,6 @@ TODO
 
 8.make it possible to reference a lib somewhere other than src/lib,
 - for libraries that are available in npm, but not in bower. (like pixi.js)
+
+9.make a folder in src/template called partial and make handlebars exclude this folder from template recompilation,
+- and includes it in partial precompilation.
