@@ -1,7 +1,7 @@
 {
   "name": "sway-cli",
-  "description": "Command line interface for sway.",
-  "version": "0.0.1",
+  "description": "Command line interface for sway-ma.",
+  "version": "0.1.0",
   "bin": {
     "sway": "index.js"
   },
